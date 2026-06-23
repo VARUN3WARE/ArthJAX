@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Generated artifacts
+*.pdf
+ARTHJAX_SHOWCASE.html
+
+# Local dev / legacy (not in public repo yet)
+improved_synthetic_economy.ipynb
+synthetic_economy_simulator.ipynb
+notebook347af0b62d.ipynb
+handoff.md
+build_showcase_pdf.py
+*.png
+!docs/assets/*.png
+
+# OS
+.DS_Store
+Thumbs.db
