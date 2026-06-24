@@ -43,7 +43,6 @@ improved_synthetic_economy.ipynb
 synthetic_economy_simulator.ipynb
 notebook347af0b62d.ipynb
 handoff.md
-build_showcase_pdf.py
 *.png
 !docs/assets/*.png
 

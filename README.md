@@ -37,8 +37,8 @@ ArthJAX simulates a synthetic economy on a GPU:
 | Version | Deliverable |
 |---------|-------------|
 | **v0.1** | Repo foundation, `EconomyConfig`, docs |
-| **v0.2** | Core simulation in `arthjax/` + `scripts/run_simulation.py` |
-| **v0.3** | World model training + visualization CLI |
+| **v0.2** | Core simulation in `arthjax/` + `scripts/run_simulation.py` ✓ |
+| **v0.3** | World model training + visualization CLI ✓ |
 | **v0.4** | Tests + CI smoke run on CPU |
 | **v0.5** | Kaggle notebook + README badges |
 
@@ -53,6 +53,7 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -e .
 python scripts/run_simulation.py --steps 600
+python scripts/train_world_model.py --epochs 50 --plot
 ```
 
 ### GPU (optional)
