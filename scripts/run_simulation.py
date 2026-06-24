@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import time
 
 import jax
@@ -19,6 +20,13 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Run ArthJAX macro ABM simulation")
     parser.add_argument("--steps", type=int, default=600, help="Number of timesteps")
     parser.add_argument("--seed", type=int, default=42, help="PRNG seed")
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        default=".",
+        help="Directory for plot output",
+    )
+    parser.add_argument("--plot", action="store_true", help="Save macro charts")
     args = parser.parse_args()
 
     cfg = EconomyConfig(
@@ -48,6 +56,14 @@ def main() -> int:
     print(f"Unemployment: {metrics_np['unemployment'][-1] * 100:.2f}%")
     print(f"Sentiment: {metrics_np['sentiment'][-1]:.3f}")
     print(f"Gini: {metrics_np['gini_coefficient'][-1]:.4f}")
+
+    if args.plot:
+        from arthjax.viz.plots import save_all_plots
+
+        out = os.path.abspath(args.output_dir)
+        os.makedirs(out, exist_ok=True)
+        save_all_plots(metrics_np, out, cfg)
+        print(f"Plots saved to {out}")
 
     return 0
 
