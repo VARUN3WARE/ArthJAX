@@ -28,7 +28,7 @@ ArthJAX simulates a synthetic economy on a GPU:
 
 **600 timesteps in seconds** on GPU via JIT-compiled `lax.scan`.
 
-> **v0.1 (this release):** project foundation and package skeleton. Runnable simulation lands in **v0.2**.
+> **v0.2:** runnable GPU simulation via `scripts/run_simulation.py`. World model + viz in v0.3.
 
 ---
 
@@ -44,7 +44,7 @@ ArthJAX simulates a synthetic economy on a GPU:
 
 ---
 
-## Quick start (v0.1)
+## Quick start
 
 ```bash
 git clone https://github.com/VARUN3WARE/ArthJAX.git
@@ -52,10 +52,8 @@ cd ArthJAX
 python -m venv .venv
 source .venv/bin/activate
 pip install -e .
-python -c "from arthjax import EconomyConfig; print(EconomyConfig())"
+python scripts/run_simulation.py --steps 600
 ```
-
-Simulation CLI (`python scripts/run_simulation.py`) arrives in v0.2.
 
 ### GPU (optional)
 

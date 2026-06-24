@@ -1,9 +1,11 @@
 # Scripts
 
-CLI entry points will live here.
+| Script | Description |
+|--------|-------------|
+| `run_simulation.py` | Run macro ABM simulation (`--steps`, `--seed`) |
+| `train_world_model.py` | Train neural world model (v0.3) |
+| `build_showcase_pdf.py` | Build LinkedIn showcase PDF (v0.3) |
 
-| Script | Status |
-|--------|--------|
-| `run_simulation.py` | Planned v0.2 |
-| `train_world_model.py` | Planned v0.3 |
-| `build_showcase_pdf.py` | Planned v0.3 |
+```bash
+python scripts/run_simulation.py --steps 600 --seed 42
+```

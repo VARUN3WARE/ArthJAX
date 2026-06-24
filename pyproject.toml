@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "arthjax"
-version = "0.1.0"
+version = "0.2.0"
 description = "GPU-accelerated agent-based macro simulator with neural world models in JAX"
 readme = "README.md"
 license = { text = "MIT" }
