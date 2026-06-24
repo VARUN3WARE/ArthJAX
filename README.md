@@ -4,6 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
+[![CI](https://github.com/VARUN3WARE/ArthJAX/actions/workflows/ci.yml/badge.svg)](https://github.com/VARUN3WARE/ArthJAX/actions/workflows/ci.yml)
 
 ![Emergent macro dynamics from 250 agents](docs/assets/linkedin_hero.png)
 
@@ -28,7 +29,7 @@ ArthJAX simulates a synthetic economy on a GPU:
 
 **600 timesteps in seconds** on GPU via JIT-compiled `lax.scan`.
 
-> **v0.2:** runnable GPU simulation via `scripts/run_simulation.py`. World model + viz in v0.3.
+> **v0.4:** full package with simulation CLI, world model, viz, and CPU CI tests.
 
 ---
 
@@ -39,7 +40,7 @@ ArthJAX simulates a synthetic economy on a GPU:
 | **v0.1** | Repo foundation, `EconomyConfig`, docs |
 | **v0.2** | Core simulation in `arthjax/` + `scripts/run_simulation.py` ✓ |
 | **v0.3** | World model training + visualization CLI ✓ |
-| **v0.4** | Tests + CI smoke run on CPU |
+| **v0.4** | Tests + CI smoke run on CPU ✓ |
 | **v0.5** | Kaggle notebook + README badges |
 
 ---
