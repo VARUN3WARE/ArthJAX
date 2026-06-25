@@ -30,6 +30,7 @@ ENV/
 
 # IDE / local only
 .local_dev/
+sharing_socials/
 .cursor/
 .idea/
 .vscode/
