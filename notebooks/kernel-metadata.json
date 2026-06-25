@@ -1,0 +1,13 @@
+{
+  "id": "varun3ware/arthjax-gpu-demo",
+  "title": "ArthJAX GPU Macro ABM Demo",
+  "code_file": "kaggle.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "competition_sources": []
+}

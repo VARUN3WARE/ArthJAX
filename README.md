@@ -29,7 +29,19 @@ ArthJAX simulates a synthetic economy on a GPU:
 
 **600 timesteps in seconds** on GPU via JIT-compiled `lax.scan`.
 
-> **v0.4:** full package with simulation CLI, world model, viz, and CPU CI tests.
+> **v0.5:** Kaggle GPU notebook + public one-click demo. See [notebooks/kaggle.ipynb](notebooks/kaggle.ipynb).
+
+---
+
+## Run on Kaggle (GPU)
+
+[![Open In Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/kernels/fork?url=https://github.com/VARUN3WARE/ArthJAX/blob/main/notebooks/kaggle.ipynb)
+
+1. Open the notebook link above (or upload `notebooks/kaggle.ipynb`).
+2. Enable **GPU** and **Internet**.
+3. Run All — charts save to `/kaggle/working/`.
+
+Details: [notebooks/README.md](notebooks/README.md)
 
 ---
 
@@ -41,7 +53,7 @@ ArthJAX simulates a synthetic economy on a GPU:
 | **v0.2** | Core simulation in `arthjax/` + `scripts/run_simulation.py` ✓ |
 | **v0.3** | World model training + visualization CLI ✓ |
 | **v0.4** | Tests + CI smoke run on CPU ✓ |
-| **v0.5** | Kaggle notebook + README badges |
+| **v0.5** | Kaggle notebook + README badges ✓ |
 | **v1.0** | Benchmarks, scenarios, research-ready API (see issues) |
 
 ---

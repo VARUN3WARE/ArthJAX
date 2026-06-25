@@ -41,35 +41,21 @@ Real economies are too complex and too consequential to experiment on directly.
 | **Compute** | JIT-compiled `lax.scan` — no Python loops over agents or time |
 | **AI layer** | MLP world model trained on normalized state transitions |
 
-**Open-source GitHub repository — coming soon.**
+**Open source:** [github.com/VARUN3WARE/ArthJAX](https://github.com/VARUN3WARE/ArthJAX) — installable package + Kaggle notebook.
 
 ---
 
-## 3. How It Works (Notebook Pipeline)
+## 3. How It Works (Pipeline)
 
-The notebook `improved_synthetic_economy.ipynb` runs top to bottom on **Kaggle GPU** (~7 minutes). Each section builds one layer of the economy.
+Run on **Kaggle GPU** via [`notebooks/kaggle.ipynb`](../notebooks/kaggle.ipynb) (installs from GitHub), or locally:
 
-### Part A — Setup & initialization
-
-| Step | What happens |
-|------|----------------|
-| **Environment** | JAX 0.7+ on **CUDA GPU**; outputs saved to working directory |
-| **State design** | PyTree dictionary: wealth, firm balance sheets, bank books, macro variables, contagion buffer |
-| **Initialization** | Random but bounded starting conditions; 4 household behavioral types |
-
-**Typical output:**
-
-```
-JAX version: 0.7.2
-Devices: [CudaDevice(id=0)]
-Households: 250 (4 behavioral types)
-Companies: 60 across 10 sectors
-Macro: interest_rate=0.0400, inflation=0.0200
+```bash
+pip install -e .
+python scripts/run_simulation.py --steps 600 --plot
+python scripts/train_world_model.py --epochs 50 --plot
 ```
 
-### Part B — Agent & market dynamics (vectorized functions)
-
-Each timestep updates the economy in order:
+Each timestep updates the economy in this order:
 
 1. **Households** — consumption and investment by behavioral type; macro-sensitive income.
 2. **Companies** — revenue from demand, debt service, leverage limits, order-book price impact.
