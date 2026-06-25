@@ -28,7 +28,9 @@ ENV/
 # Jupyter
 .ipynb_checkpoints/
 
-# IDE
+# IDE / local only
+.local_dev/
+.cursor/
 .idea/
 .vscode/
 *.swp

@@ -42,6 +42,7 @@ ArthJAX simulates a synthetic economy on a GPU:
 | **v0.3** | World model training + visualization CLI ✓ |
 | **v0.4** | Tests + CI smoke run on CPU ✓ |
 | **v0.5** | Kaggle notebook + README badges |
+| **v1.0** | Benchmarks, scenarios, research-ready API (see issues) |
 
 ---
 
@@ -80,7 +81,16 @@ pip install -e .
 
 ## Documentation
 
-- [Full showcase & chart guide](docs/ARTHJAX_SHOWCASE.md) — problem, results, LinkedIn narrative
+- [Full showcase & chart guide](docs/ARTHJAX_SHOWCASE.md) — problem, results, narrative for sharing
+- [Contributing](CONTRIBUTING.md) — setup, PR guidelines, good first issues
+
+---
+
+## Contributing
+
+Contributions are welcome — tests, scenarios, docs, and benchmarks are especially helpful right now. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and commit expectations.
+
+If you're exploring the idea space: this is a **toy synthetic economy** for stress-testing and research prototypes, not a production forecasting tool. Issues and honest feedback are appreciated.
 
 ---
 
