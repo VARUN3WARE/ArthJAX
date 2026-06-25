@@ -41,13 +41,13 @@ Real economies are too complex and too consequential to experiment on directly.
 | **Compute** | JIT-compiled `lax.scan` — no Python loops over agents or time |
 | **AI layer** | MLP world model trained on normalized state transitions |
 
-**Open source:** [github.com/VARUN3WARE/ArthJAX](https://github.com/VARUN3WARE/ArthJAX) — installable package + Kaggle notebook.
+**Open source:** [github.com/VARUN3WARE/ArthJAX](https://github.com/VARUN3WARE/ArthJAX) · **Live demo:** [Kaggle GPU notebook](https://www.kaggle.com/code/varunraosfanlkan/arthjax-gpu-macro-abm-world-model)
 
 ---
 
 ## 3. How It Works (Pipeline)
 
-Run on **Kaggle GPU** via [`notebooks/kaggle.ipynb`](../notebooks/kaggle.ipynb) (installs from GitHub), or locally:
+Run on **Kaggle GPU**: [ArthJAX GPU Macro ABM + World Model](https://www.kaggle.com/code/varunraosfanlkan/arthjax-gpu-macro-abm-world-model) (Run All), or locally:
 
 ```bash
 pip install -e .
@@ -258,10 +258,16 @@ OUTPUTS        5 publication-style charts (dark theme)
 
 ## 8. Reproduce It Yourself
 
-1. Upload `improved_synthetic_economy.ipynb` to **Kaggle**.
-2. **Settings → Accelerator → GPU**.
-3. **Run All**.
-4. Download PNGs from the output folder.
+**Easiest:** open the [published Kaggle notebook](https://www.kaggle.com/code/varunraosfanlkan/arthjax-gpu-macro-abm-world-model) and **Run All** (GPU).
+
+**Local:**
+
+```bash
+git clone https://github.com/VARUN3WARE/ArthJAX.git
+cd ArthJAX && pip install -e .
+python scripts/run_simulation.py --steps 600 --plot
+python scripts/train_world_model.py --epochs 50 --plot
+```
 
 Files generated:
 
@@ -273,17 +279,14 @@ Files generated:
 
 ---
 
-## 9. What’s Next (Open Source)
+## 9. What’s Next
 
-Planned for the public GitHub release:
+Public repo and Kaggle demo are live. Roadmap:
 
-- Clean README with install instructions
-- Comparison to EconoJax / AI Economist
-- Tunable parameters (shock frequency, agent mix)
-- Larger world model (Flax/JAX)
-- Counterfactual mode: “what if oil shock at t=200?”
-
-**Follow for the repo drop.**
+- Named stress scenarios (credit crunch, oil shock)
+- Stylized-facts benchmarks vs theory
+- World model v2 (lower macro rollout error)
+- See [README](https://github.com/VARUN3WARE/ArthJAX#roadmap)
 
 ---
 

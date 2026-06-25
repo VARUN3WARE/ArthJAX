@@ -5,6 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![CI](https://github.com/VARUN3WARE/ArthJAX/actions/workflows/ci.yml/badge.svg)](https://github.com/VARUN3WARE/ArthJAX/actions/workflows/ci.yml)
+[![Open In Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/code/varunraosfanlkan/arthjax-gpu-macro-abm-world-model)
 
 ![Emergent macro dynamics from 250 agents](docs/assets/linkedin_hero.png)
 
@@ -29,19 +30,20 @@ ArthJAX simulates a synthetic economy on a GPU:
 
 **600 timesteps in seconds** on GPU via JIT-compiled `lax.scan`.
 
-> **v0.5:** Kaggle GPU notebook + public one-click demo. See [notebooks/kaggle.ipynb](notebooks/kaggle.ipynb).
+> **v0.5:** [Live Kaggle demo](https://www.kaggle.com/code/varunraosfanlkan/arthjax-gpu-macro-abm-world-model) — GPU, Run All, no local setup.
 
 ---
 
 ## Run on Kaggle (GPU)
 
-[![Open In Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/kernels/fork?url=https://github.com/VARUN3WARE/ArthJAX/blob/main/notebooks/kaggle.ipynb)
+**Published notebook:** [ArthJAX GPU Macro ABM + World Model](https://www.kaggle.com/code/varunraosfanlkan/arthjax-gpu-macro-abm-world-model)
 
-1. Open the notebook link above (or upload `notebooks/kaggle.ipynb`).
-2. Enable **GPU** and **Internet**.
-3. Run All — charts save to `/kaggle/working/`.
+[![Open In Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/code/varunraosfanlkan/arthjax-gpu-macro-abm-world-model)
 
-Details: [notebooks/README.md](notebooks/README.md)
+1. Open the link → **Run All** (GPU + Internet already configured on the published kernel).
+2. Download charts from the **Output** tab (`macro_evolution_v2.png`, `linkedin_hero.png`, etc.).
+
+Fork from source: [notebooks/kaggle.ipynb](notebooks/kaggle.ipynb) · [notebooks/README.md](notebooks/README.md)
 
 ---
 

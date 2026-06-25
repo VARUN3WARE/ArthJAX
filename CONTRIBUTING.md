@@ -2,7 +2,7 @@
 
 Thanks for your interest — contributions are welcome whether you're fixing a bug, adding a scenario, improving docs, or extending the world model.
 
-ArthJAX is early-stage (v0.4). The core sim runs; we're working toward public benchmarks and a Kaggle demo. Honest issues and small PRs are more valuable than huge rewrites.
+ArthJAX is at **v0.5** — core sim, world model, CI, and a [live Kaggle demo](https://www.kaggle.com/code/varunraosfanlkan/arthjax-gpu-macro-abm-world-model). Next up: scenarios and benchmarks.
 
 ---
 
@@ -30,7 +30,7 @@ Good first contributions:
 - **Docs** — clarify agent rules, fix typos, add examples
 - **Scenarios** — named stress presets (oil shock, credit crunch) with tests
 - **Benchmarks** — stylized facts (volatility clustering, Phillips curve)
-- **Notebooks** — Kaggle-friendly demo (see roadmap v0.5)
+- **Notebooks** — scenarios, benchmarks (see roadmap v0.6+)
 
 Check the [README roadmap](README.md#roadmap) for planned releases. Open an issue before large features so we don't duplicate work.
 

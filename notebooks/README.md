@@ -2,17 +2,21 @@
 
 | Notebook | Where to run | Description |
 |----------|--------------|-------------|
-| [`kaggle.ipynb`](kaggle.ipynb) | **Kaggle GPU** (recommended) | Full demo: sim + charts + world model |
-| [`demo.ipynb`](demo.ipynb) | Local / Colab | Thin wrapper after `pip install -e .` |
+| [**Kaggle (live)**](https://www.kaggle.com/code/varunraosfanlkan/arthjax-gpu-macro-abm-world-model) | Kaggle GPU | Published demo — Run All, download charts |
+| [`kaggle.ipynb`](kaggle.ipynb) | Kaggle GPU | Source notebook (install from GitHub) |
+| [`demo.ipynb`](demo.ipynb) | Local | Thin wrapper after `pip install -e .` |
 
 ## Run on Kaggle
 
-1. Fork or upload [`kaggle.ipynb`](kaggle.ipynb) to Kaggle (use [`kernel-metadata.json`](kernel-metadata.json) if using the Kaggle API).
-2. Settings → **Accelerator: GPU T4 x2** (or any GPU).
-3. Settings → **Internet: On** (required to `pip install` from GitHub).
-4. **Run All** — outputs land in `/kaggle/working/`.
+**Live kernel:** https://www.kaggle.com/code/varunraosfanlkan/arthjax-gpu-macro-abm-world-model
 
-After publishing, update the kernel URL in the root [README](../README.md).
+Open → **Run All** → download PNGs from **Output**.
+
+To republish or fork from repo:
+
+1. Upload [`kaggle.ipynb`](kaggle.ipynb) or use [`kernel-metadata.json`](kernel-metadata.json) with the Kaggle API.
+2. **Accelerator: GPU** · **Internet: On**
+3. Outputs land in `/kaggle/working/`
 
 ## Local demo
 

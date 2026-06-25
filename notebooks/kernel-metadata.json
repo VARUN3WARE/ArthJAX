@@ -1,6 +1,6 @@
 {
-  "id": "varun3ware/arthjax-gpu-demo",
-  "title": "ArthJAX GPU Macro ABM Demo",
+  "id": "varunraosfanlkan/arthjax-gpu-macro-abm-world-model",
+  "title": "ArthJAX GPU Macro ABM + World Model",
   "code_file": "kaggle.ipynb",
   "language": "python",
   "kernel_type": "notebook",
