@@ -30,7 +30,7 @@ ArthJAX simulates a synthetic economy on a GPU:
 
 **600 timesteps in seconds** on GPU via JIT-compiled `lax.scan`.
 
-> **v0.5:** [Live Kaggle demo](https://www.kaggle.com/code/varunraosfanlkan/arthjax-gpu-macro-abm-world-model) — GPU, Run All, no local setup.
+> **Try it:** [Kaggle GPU demo](https://www.kaggle.com/code/varunraosfanlkan/arthjax-gpu-macro-abm-world-model) (Run All) · [Medium essay](https://medium.com/@varunrao.aiml/i-simulated-250-agents-on-a-gpu-and-watched-a-financial-crisis-emerge-without-writing-crash-now-3811a6ca5f92) on how it was built
 
 ---
 
@@ -44,19 +44,6 @@ ArthJAX simulates a synthetic economy on a GPU:
 2. Download charts from the **Output** tab (`macro_evolution_v2.png`, `linkedin_hero.png`, etc.).
 
 Fork from source: [notebooks/kaggle.ipynb](notebooks/kaggle.ipynb) · [notebooks/README.md](notebooks/README.md)
-
----
-
-## Roadmap
-
-| Version | Deliverable |
-|---------|-------------|
-| **v0.1** | Repo foundation, `EconomyConfig`, docs |
-| **v0.2** | Core simulation in `arthjax/` + `scripts/run_simulation.py` ✓ |
-| **v0.3** | World model training + visualization CLI ✓ |
-| **v0.4** | Tests + CI smoke run on CPU ✓ |
-| **v0.5** | Kaggle notebook + README badges ✓ |
-| **v1.0** | Benchmarks, scenarios, research-ready API (see issues) |
 
 ---
 
@@ -95,7 +82,8 @@ pip install -e .
 
 ## Documentation
 
-- [Full showcase & chart guide](docs/ARTHJAX_SHOWCASE.md) — problem, results, narrative for sharing
+- [Medium — I Simulated 250 Agents on a GPU…](https://medium.com/@varunrao.aiml/i-simulated-250-agents-on-a-gpu-and-watched-a-financial-crisis-emerge-without-writing-crash-now-3811a6ca5f92) — essay on the build and why it exists
+- [Full showcase & chart guide](docs/ARTHJAX_SHOWCASE.md) — problem, results, chart reference
 - [Contributing](CONTRIBUTING.md) — setup, PR guidelines, good first issues
 
 ---
