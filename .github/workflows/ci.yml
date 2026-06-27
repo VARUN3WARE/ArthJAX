@@ -25,3 +25,6 @@ jobs:
 
       - name: Run tests
         run: pytest tests/ -q
+
+      - name: Benchmark smoke
+        run: python scripts/run_benchmarks.py --quick --steps 80
