@@ -5,6 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![CI](https://github.com/VARUN3WARE/ArthJAX/actions/workflows/ci.yml/badge.svg)](https://github.com/VARUN3WARE/ArthJAX/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/VARUN3WARE/ArthJAX)](https://github.com/VARUN3WARE/ArthJAX/releases)
 [![Open In Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/code/varunraosfanlkan/arthjax-gpu-macro-abm-world-model)
 
 ![Emergent macro dynamics from 250 agents](docs/assets/linkedin_hero.png)
@@ -56,7 +57,9 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -e .
 python scripts/run_simulation.py --steps 600
-python scripts/train_world_model.py --epochs 50 --plot
+python scripts/run_scenario.py --scenario credit_crunch --steps 600 --plot
+python scripts/run_benchmarks.py --steps 600
+python scripts/train_world_model.py --epochs 80 --plot
 ```
 
 ### GPU (optional)
@@ -83,6 +86,9 @@ pip install -e .
 ## Documentation
 
 - [Medium — I Simulated 250 Agents on a GPU…](https://medium.com/@varunrao.aiml/i-simulated-250-agents-on-a-gpu-and-watched-a-financial-crisis-emerge-without-writing-crash-now-3811a6ca5f92) — essay on the build and why it exists
+- [Public roadmap](docs/ROADMAP.md) — v0.6→v1.0 release plan
+- [Methods & limitations](docs/METHODS.md) — agent rules, world model, stylized facts
+- [Benchmark results](docs/BENCHMARKS.md) — pass/fail stylized facts table
 - [Full showcase & chart guide](docs/ARTHJAX_SHOWCASE.md) — problem, results, chart reference
 - [Contributing](CONTRIBUTING.md) — setup, PR guidelines, good first issues
 
