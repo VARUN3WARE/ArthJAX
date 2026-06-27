@@ -102,7 +102,22 @@ def compute_stylized_facts(metrics_np: dict, burn: int = 25) -> Dict[str, Styliz
         ),
     }
 
-    if vol is not None and len(vol) > 10:
+    if "stock_index" in metrics_np and len(metrics_np["stock_index"]) > 50:
+        si = metrics_np["stock_index"][burn:]
+        rolling_ret_vol = []
+        for i in range(40, len(si)):
+            window = si[i - 40 : i + 1]
+            rolling_ret_vol.append(float(np.std(np.diff(np.log(window + 1e-8)))))
+        rolling_ret_vol = np.array(rolling_ret_vol)
+        vol_autocorr = _autocorr(rolling_ret_vol, lag=3) if len(rolling_ret_vol) > 4 else 0.0
+        facts["volatility_autocorr"] = StylizedFactResult(
+            "volatility_autocorr",
+            vol_autocorr,
+            (0.2, 0.99),
+            vol_autocorr > 0.2,
+            "Rolling stock-index return volatility persistence",
+        )
+    elif vol is not None and len(vol) > 10 and np.std(vol) > 1e-6:
         vol_autocorr = _autocorr(vol, lag=3)
         facts["volatility_autocorr"] = StylizedFactResult(
             "volatility_autocorr",

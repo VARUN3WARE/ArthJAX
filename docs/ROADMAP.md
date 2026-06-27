@@ -38,6 +38,5 @@ Track work via [GitHub Issues](https://github.com/VARUN3WARE/ArthJAX/issues).
 - Calibration hooks (coarse fit to macro series)
 - Larger agent counts via JAX sharding
 - PyPI publish (`pip install arthjax`)
-- Fix volatility autocorr stylized fact on all seeds
 
 Contributions welcome — see [CONTRIBUTING.md](../CONTRIBUTING.md).

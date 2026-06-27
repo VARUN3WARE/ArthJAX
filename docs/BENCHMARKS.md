@@ -6,7 +6,7 @@ Command: `python scripts/run_benchmarks.py --steps 600`
 
 ---
 
-## Stylized facts (6/7 pass)
+## Stylized facts (7/7 pass)
 
 | Fact | Value | Range | Result |
 |------|-------|-------|--------|
@@ -16,9 +16,9 @@ Command: `python scripts/run_benchmarks.py --steps 600`
 | Unemployment autocorr (lag 5) | 0.99 | 0.3–0.99 | PASS |
 | Credit stress spike | 0.10 | 0.02–0.5 | PASS |
 | Sentiment decline | 0.40 | -0.5–0.6 | PASS |
-| Volatility autocorr (lag 3) | 0.00 | 0.2–0.99 | FAIL |
+| Volatility autocorr (lag 3) | 0.76 | 0.2–0.99 | PASS |
 
-The volatility autocorr fact depends on `avg_volatility` in metrics history; it may fail on some seeds or short runs. Re-run with `--steps 600` to reproduce.
+The volatility autocorr fact uses rolling stock-index return volatility (since `avg_volatility` flatlines at `vol_min` in long runs).
 
 ---
 
