@@ -14,7 +14,9 @@ import numpy as np
 from arthjax import EconomyConfig, __version__, init_state
 from arthjax.simulation.step import make_step_jit
 from arthjax.world_model.rollout import (
+    collect_real_macro_trajectory,
     collect_real_trajectory,
+    compare_macro_rollouts,
     compare_rollouts,
     rollout_learned,
 )
@@ -48,21 +50,40 @@ def main() -> int:
     step_jit = make_step_jit(cfg)
 
     start = time.time()
-    params, normalizer, losses = train_world_model(state, step_jit, cfg, key)
+    params, normalizer, losses = train_world_model(
+        state, step_jit, cfg, key, macro_only=cfg.world_model_macro_only
+    )
     print(f"Training done in {time.time() - start:.1f}s, final loss={losses[-1]:.6f}")
 
     key, eval_key = jr.split(key)
-    real_traj = collect_real_trajectory(state, step_jit, cfg, eval_key)
-    learned_traj = rollout_learned(
-        params, real_traj[0], normalizer, cfg, num_steps=len(real_traj) - 1
-    )
-    metrics = compare_rollouts(real_traj, learned_traj)
-
-    print(f"Full-state MAE: {metrics['mae']:.6f} ({metrics['relative_error_pct']:.2f}% relative)")
-    print(
-        f"Macro-only MAE: {metrics['macro_mae']:.6f} "
-        f"({metrics['macro_relative_error_pct']:.2f}% relative)"
-    )
+    if cfg.world_model_macro_only:
+        real_traj = collect_real_macro_trajectory(
+            state, step_jit, cfg, jr.PRNGKey(cfg.world_model_eval_seed)
+        )
+        learned_traj = rollout_learned(
+            params,
+            real_traj[0],
+            normalizer,
+            cfg,
+            num_steps=len(real_traj) - 1,
+            macro_only=True,
+        )
+        metrics = compare_macro_rollouts(real_traj, learned_traj)
+        print(
+            f"Macro-only MAE: {metrics['macro_mae']:.6f} "
+            f"({metrics['macro_relative_error_pct']:.2f}% relative)"
+        )
+    else:
+        real_traj = collect_real_trajectory(state, step_jit, cfg, eval_key)
+        learned_traj = rollout_learned(
+            params, real_traj[0], normalizer, cfg, num_steps=len(real_traj) - 1
+        )
+        metrics = compare_rollouts(real_traj, learned_traj)
+        print(f"Full-state MAE: {metrics['mae']:.6f} ({metrics['relative_error_pct']:.2f}% relative)")
+        print(
+            f"Macro-only MAE: {metrics['macro_mae']:.6f} "
+            f"({metrics['macro_relative_error_pct']:.2f}% relative)"
+        )
 
     if args.plot:
         from arthjax.viz.plots import plot_real_vs_learned, plot_world_model_loss

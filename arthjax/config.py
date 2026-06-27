@@ -104,14 +104,18 @@ class EconomyConfig:
 
     # World model defaults
     world_model_hidden_dim: int = 128
-    world_model_epochs: int = 50
+    world_model_epochs: int = 80
     world_model_batch_size: int = 64
-    world_model_lr: float = 0.002
-    world_model_num_rollouts: int = 5
-    world_model_rollout_length: int = 120
+    world_model_lr: float = 0.003
+    world_model_num_rollouts: int = 8
+    world_model_rollout_length: int = 150
     world_model_eval_steps: int = 200
     world_model_grad_clip: float = 1.0
     world_model_norm_clip: float = 4.0
+    world_model_macro_only: bool = True
+    world_model_latent_dim: int = 32
+    world_model_eval_seed: int = 200
+    world_model_multi_step_horizon: int = 3
 
     # Visualization
     plot_burn_in: int = 25

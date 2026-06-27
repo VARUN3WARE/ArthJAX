@@ -34,6 +34,30 @@ def flatten_state(state: dict, cfg: EconomyConfig) -> jnp.ndarray:
     )
 
 
+def macro_slice(flat: np.ndarray | jnp.ndarray) -> jnp.ndarray:
+    """Last 4 components: interest_rate, inflation, unemployment, sentiment."""
+    return jnp.asarray(flat)[-4:]
+
+
+def flatten_macro(state: dict) -> jnp.ndarray:
+    """Macro-only vector for world model v2."""
+    return jnp.array(
+        [
+            state["interest_rate"],
+            state["inflation"],
+            state["unemployment"],
+            state["sentiment_index"],
+        ]
+    )
+
+
+def embed_macro_in_flat(full_flat: np.ndarray, macro_next: np.ndarray) -> np.ndarray:
+    """Replace macro tail of full state vector."""
+    out = np.array(full_flat, copy=True)
+    out[-4:] = macro_next
+    return out
+
+
 def collect_trajectories(
     initial_state: dict,
     step_jit: Callable,
@@ -58,6 +82,51 @@ def collect_trajectories(
                 (np.array(state_flat), np.array(flatten_state(state, cfg)))
             )
     return transitions
+
+
+def collect_macro_trajectories(
+    initial_state: dict,
+    step_jit: Callable,
+    cfg: EconomyConfig,
+    key: jax.random.PRNGKey,
+    num_rollouts: int | None = None,
+    rollout_length: int | None = None,
+    init_state_fn: Callable | None = None,
+) -> List[Tuple[np.ndarray, np.ndarray]]:
+    """Macro-only (4-dim) transitions for world model v2."""
+    from arthjax.state import init_state as default_init_state
+
+    init_state_fn = init_state_fn or default_init_state
+    num_rollouts = num_rollouts or cfg.world_model_num_rollouts
+    rollout_length = rollout_length or cfg.world_model_rollout_length
+    transitions: List[Tuple[np.ndarray, np.ndarray]] = []
+
+    for r in range(num_rollouts):
+        key, init_key, subkey = jr.split(key, 3)
+        state = initial_state if r == 0 else init_state_fn(cfg, init_key)
+        for _ in range(rollout_length):
+            m0 = np.array(flatten_macro(state))
+            state, _ = step_jit(state, subkey)
+            key, subkey = jr.split(subkey)
+            m1 = np.array(flatten_macro(state))
+            transitions.append((m0, m1))
+    return transitions
+
+
+def build_multistep_sequences(
+    transitions: List[Tuple[np.ndarray, np.ndarray]],
+    horizon: int,
+) -> List[Tuple[np.ndarray, np.ndarray]]:
+    """Build (x0, stacked_y) pairs for k-step autoregressive training."""
+    if horizon <= 1 or len(transitions) < horizon:
+        return [(t[0], t[1]) for t in transitions]
+
+    sequences: List[Tuple[np.ndarray, np.ndarray]] = []
+    for i in range(len(transitions) - horizon + 1):
+        x0 = transitions[i][0]
+        future = np.stack([transitions[i + k][1] for k in range(horizon)])
+        sequences.append((x0, future))
+    return sequences
 
 
 @dataclass

@@ -41,13 +41,30 @@ def model_loss(params: dict, x_batch: jnp.ndarray, y_batch: jnp.ndarray) -> jnp.
     return jnp.mean((model_forward(params, x_batch) - y_batch) ** 2)
 
 
-def make_train_step(cfg: EconomyConfig):
+def multistep_loss(
+    params: dict,
+    x_batch: jnp.ndarray,
+    y_seq: jnp.ndarray,
+) -> jnp.ndarray:
+    """y_seq shape (batch, horizon, dim) — autoregressive k-step MSE."""
+    horizon = y_seq.shape[1]
+    x = x_batch
+    total = 0.0
+    for h in range(horizon):
+        pred = model_forward(params, x)
+        total = total + jnp.mean((pred - y_seq[:, h, :]) ** 2)
+        x = pred
+    return total / horizon
+
+
+def make_train_step(cfg: EconomyConfig, multistep: bool = False):
   grad_clip = cfg.world_model_grad_clip
+  loss_fn = multistep_loss if multistep else model_loss
 
   def train_step(params, x_batch, y_batch, lr):
-      grads = jax.grad(model_loss)(params, x_batch, y_batch)
+      grads = jax.grad(loss_fn)(params, x_batch, y_batch)
       grads = jax.tree.map(lambda g: jnp.clip(g, -grad_clip, grad_clip), grads)
       new_params = jax.tree.map(lambda p, g: p - lr * g, params, grads)
-      return new_params, model_loss(new_params, x_batch, y_batch)
+      return new_params, loss_fn(new_params, x_batch, y_batch)
 
   return jit(train_step)
