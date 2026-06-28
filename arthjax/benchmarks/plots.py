@@ -23,7 +23,7 @@ def plot_phillips_scatter(
     fig, ax = plt.subplots(figsize=(8, 6))
     fig.patch.set_facecolor("#0f1117")
     ax.scatter(unemp, infl, alpha=0.55, s=18, c=PALETTE["inflation"], edgecolors="none")
-    style_ax(ax, "Phillips curve (synthetic)", "Unemployment (%)", "Inflation (%)")
+    style_ax(ax, "Phillips curve (synthetic)", "Inflation (%)", "Unemployment (%)")
 
     if len(unemp) > 10 and np.std(unemp) > 1e-6:
         slope, intercept = np.polyfit(unemp, infl, 1)
@@ -61,7 +61,7 @@ def plot_volatility_clustering(
     fig, ax = plt.subplots(figsize=(10, 4))
     fig.patch.set_facecolor("#0f1117")
     ax.plot(t, rolling_ret_vol, color=PALETTE["stocks"], linewidth=1.5)
-    style_ax(ax, "Volatility clustering (rolling 40-step return vol)", "Step", "Return vol")
+    style_ax(ax, "Volatility clustering (rolling 40-step return vol)", "Return vol", "Step")
     os.makedirs(os.path.dirname(os.path.abspath(output_path)) or ".", exist_ok=True)
     fig.tight_layout()
     fig.savefig(output_path, dpi=150, facecolor=fig.get_facecolor())

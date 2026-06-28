@@ -43,3 +43,13 @@ def test_stylized_facts_volatility_autocorr_passes(default_metrics):
     facts = compute_stylized_facts(metrics_np, burn=cfg.plot_burn_in)
     assert "volatility_autocorr" in facts
     assert facts["volatility_autocorr"].passed
+
+
+def test_benchmark_plots_smoke(default_metrics, tmp_path):
+    from arthjax.benchmarks.plots import plot_phillips_scatter, plot_volatility_clustering
+
+    metrics_np, cfg = default_metrics
+    plot_phillips_scatter(metrics_np, str(tmp_path / "phillips.png"), burn=cfg.plot_burn_in)
+    plot_volatility_clustering(metrics_np, str(tmp_path / "vol.png"), burn=cfg.plot_burn_in)
+    assert (tmp_path / "phillips.png").exists()
+    assert (tmp_path / "vol.png").exists()

@@ -36,11 +36,11 @@ def apply_plot_style() -> None:
     plt.rcParams.update(PLOT_STYLE)
 
 
-def style_ax(ax, title: str, ylabel: str) -> None:
+def style_ax(ax, title: str, ylabel: str, xlabel: str = "Time Step") -> None:
     ax.set_facecolor("#161b22")
     ax.set_title(title, fontweight="bold", fontsize=11, color="#f0f6fc", pad=8)
     ax.set_ylabel(ylabel, fontsize=9, color="#8b949e")
-    ax.set_xlabel("Time Step", fontsize=9, color="#8b949e")
+    ax.set_xlabel(xlabel, fontsize=9, color="#8b949e")
     ax.grid(True, alpha=0.35, color="#21262d")
     ax.tick_params(colors="#8b949e")
     for spine in ax.spines.values():
