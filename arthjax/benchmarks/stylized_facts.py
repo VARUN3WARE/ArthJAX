@@ -34,6 +34,38 @@ def _rolling_std(series: np.ndarray, window: int = 40) -> np.ndarray:
     return np.array(out) if out else np.array([0.0])
 
 
+def rolling_return_volatility(
+    stock_index: np.ndarray,
+    burn: int = 0,
+    window: int = 40,
+) -> np.ndarray:
+    """Rolling std of log returns on stock index (post burn-in)."""
+    si = stock_index[burn:]
+    rolling_ret_vol = []
+    for i in range(window, len(si)):
+        w = si[i - window : i + 1]
+        rolling_ret_vol.append(float(np.std(np.diff(np.log(w + 1e-8)))))
+    return np.array(rolling_ret_vol)
+
+
+def volatility_clustering_score(
+    metrics_np: dict,
+    burn: int = 25,
+    window: int = 40,
+) -> tuple[float, float]:
+    """Return (gdp rolling-vol score, return-vol autocorr lag-3)."""
+    gdp = metrics_np["gdp"][burn:]
+    vol_std = _rolling_std(gdp, window)
+    gdp_score = float(np.std(vol_std)) if len(vol_std) else 0.0
+
+    ret_autocorr = 0.0
+    if "stock_index" in metrics_np and len(metrics_np["stock_index"]) > burn + window + 5:
+        rv = rolling_return_volatility(metrics_np["stock_index"], burn, window)
+        ret_autocorr = _autocorr(rv, lag=3) if len(rv) > 4 else 0.0
+
+    return gdp_score, ret_autocorr
+
+
 def compute_stylized_facts(metrics_np: dict, burn: int = 25) -> Dict[str, StylizedFactResult]:
     """Compute pass/fail stylized facts from metrics history."""
     gdp = metrics_np["gdp"][burn:]
@@ -48,7 +80,9 @@ def compute_stylized_facts(metrics_np: dict, burn: int = 25) -> Dict[str, Styliz
     step_downs = int(np.sum(gdp_diff < -20.0))
 
     vol_std = _rolling_std(gdp, 40)
-    vol_cluster_score = float(np.std(vol_std)) if len(vol_std) else 0.0
+    vol_cluster_score, ret_vol_autocorr = volatility_clustering_score(
+        metrics_np, burn=burn
+    )
 
     phillips_slope = 0.0
     if len(unemp) > 10 and np.std(unemp) > 1e-6:
@@ -103,18 +137,11 @@ def compute_stylized_facts(metrics_np: dict, burn: int = 25) -> Dict[str, Styliz
     }
 
     if "stock_index" in metrics_np and len(metrics_np["stock_index"]) > 50:
-        si = metrics_np["stock_index"][burn:]
-        rolling_ret_vol = []
-        for i in range(40, len(si)):
-            window = si[i - 40 : i + 1]
-            rolling_ret_vol.append(float(np.std(np.diff(np.log(window + 1e-8)))))
-        rolling_ret_vol = np.array(rolling_ret_vol)
-        vol_autocorr = _autocorr(rolling_ret_vol, lag=3) if len(rolling_ret_vol) > 4 else 0.0
         facts["volatility_autocorr"] = StylizedFactResult(
             "volatility_autocorr",
-            vol_autocorr,
+            ret_vol_autocorr,
             (0.2, 0.99),
-            vol_autocorr > 0.2,
+            ret_vol_autocorr > 0.2,
             "Rolling stock-index return volatility persistence",
         )
     elif vol is not None and len(vol) > 10 and np.std(vol) > 1e-6:
