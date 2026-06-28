@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import time
 
 import jax
@@ -11,8 +12,14 @@ import jax.random as jr
 import numpy as np
 
 from arthjax import EconomyConfig, __version__, init_state, simulate
-from arthjax.benchmarks import compute_stylized_facts, evaluate_ar1_baseline, summarize_facts
+from arthjax.benchmarks import (
+    build_comparison_table,
+    compute_stylized_facts,
+    format_comparison_table,
+    summarize_facts,
+)
 from arthjax.benchmarks.baselines import compare_speed
+from arthjax.benchmarks.plots import plot_phillips_scatter, plot_volatility_clustering
 from arthjax.simulation.step import make_step_jit
 from arthjax.world_model.rollout import (
     collect_real_macro_trajectory,
@@ -27,6 +34,8 @@ def main() -> int:
     parser.add_argument("--steps", type=int, default=600)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--quick", action="store_true", help="Tiny economy for CI smoke")
+    parser.add_argument("--plot", action="store_true", help="Save Phillips + vol clustering charts")
+    parser.add_argument("--output-dir", type=str, default=".")
     args = parser.parse_args()
 
     if args.quick:
@@ -57,11 +66,21 @@ def main() -> int:
     print(summarize_facts(facts))
     print()
 
+    if args.plot:
+        out = os.path.abspath(args.output_dir)
+        os.makedirs(out, exist_ok=True)
+        plot_phillips_scatter(
+            metrics_np, os.path.join(out, "phillips_scatter.png"), burn=cfg.plot_burn_in
+        )
+        plot_volatility_clustering(
+            metrics_np, os.path.join(out, "vol_clustering.png"), burn=cfg.plot_burn_in
+        )
+        print(f"Plots saved to {out}")
+
+    horizon = min(50, 99)
     real_macro = collect_real_macro_trajectory(
-        state, step_jit, cfg, jr.PRNGKey(cfg.world_model_eval_seed), num_steps=100
+        state, step_jit, cfg, jr.PRNGKey(cfg.world_model_eval_seed), num_steps=horizon + 1
     )
-    ar1 = evaluate_ar1_baseline(real_macro, horizon=min(50, len(real_macro) - 1))
-    print(f"AR(1) baseline MAE (interest rate col): {ar1.mae:.6f} ({ar1.elapsed_sec:.4f}s)")
 
     wm_key = jr.PRNGKey(100)
     t1 = time.time()
@@ -83,6 +102,19 @@ def main() -> int:
         f"World model macro MAE: {wm_metrics['macro_mae']:.6f} "
         f"({wm_metrics['macro_relative_error_pct']:.2f}% relative)"
     )
+
+    table = build_comparison_table(
+        real_macro,
+        full_sim_sec=sim_sec,
+        sim_steps=args.steps,
+        wm_mae=wm_metrics["macro_mae"],
+        wm_relative_pct=wm_metrics["macro_relative_error_pct"],
+        wm_rollout_sec=wm_sec,
+        horizon=min(50, len(real_macro) - 1),
+    )
+    print()
+    print(format_comparison_table(table))
+    print()
     print(compare_speed(sim_sec, wm_sec, args.steps))
     print(f"WM train time: {train_sec:.2f}s")
 
