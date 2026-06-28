@@ -85,3 +85,47 @@ def test_world_model_macro_mae_below_threshold(tiny_cfg):
     )
     metrics = compare_macro_rollouts(real_macro, learned)
     assert metrics["macro_relative_error_pct"] < 25.0, metrics
+
+
+@pytest.fixture
+def latent_cfg():
+    return EconomyConfig(
+        num_households=20,
+        num_companies=10,
+        num_sectors=5,
+        num_commodities=4,
+        num_currencies=2,
+        world_model_macro_only=False,
+        world_model_use_latent=True,
+        world_model_latent_dim=16,
+        world_model_epochs=5,
+        world_model_num_rollouts=2,
+        world_model_rollout_length=20,
+        world_model_eval_steps=10,
+        world_model_hidden_dim=32,
+        world_model_batch_size=16,
+    )
+
+
+def test_latent_world_model_finite(latent_cfg):
+    """Full-state latent encoder path produces finite rollouts."""
+    key = jr.PRNGKey(7)
+    key, init_key = jr.split(key)
+    state = init_state(latent_cfg, init_key)
+    step_jit = make_step_jit(latent_cfg)
+
+    params, normalizer, losses = train_world_model(
+        state, step_jit, latent_cfg, key, macro_only=False
+    )
+    assert params.get("latent") is True
+    assert len(losses) == latent_cfg.world_model_epochs
+    assert all(np.isfinite(l) for l in losses)
+
+    from arthjax.world_model.data import flatten_state
+
+    flat0 = np.array(flatten_state(state, latent_cfg))
+    learned = rollout_learned(
+        params, flat0, normalizer, latent_cfg, num_steps=latent_cfg.world_model_eval_steps
+    )
+    assert learned.shape[0] == latent_cfg.world_model_eval_steps + 1
+    assert np.all(np.isfinite(learned))

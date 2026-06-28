@@ -115,6 +115,7 @@ class EconomyConfig:
     world_model_macro_only: bool = True
     world_model_latent_dim: int = 32
     world_model_eval_seed: int = 200
+    world_model_use_latent: bool = False
     world_model_multi_step_horizon: int = 3
 
     # Visualization

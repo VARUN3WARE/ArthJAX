@@ -13,6 +13,11 @@ from arthjax.world_model.data import (
     macro_slice,
 )
 from arthjax.world_model.mlp import model_forward
+from arthjax.world_model.encoder import encode, decode, latent_predict_next
+
+
+def _is_latent_params(params: dict) -> bool:
+    return isinstance(params, dict) and params.get("latent") is True
 
 
 def rollout_learned(
@@ -27,6 +32,21 @@ def rollout_learned(
     macro_only = cfg.world_model_macro_only if macro_only is None else macro_only
     num_steps = num_steps or cfg.world_model_eval_steps
     initial_flat = np.array(initial_flat)
+
+    if _is_latent_params(params):
+        states = [initial_flat.copy()]
+        current_norm = normalizer.normalize(initial_flat)
+        for _ in range(num_steps):
+            next_norm = latent_predict_next(
+                params["encoder"], params["mlp"], current_norm
+            )
+            next_norm = jnp.clip(
+                next_norm, -cfg.world_model_norm_clip, cfg.world_model_norm_clip
+            )
+            next_flat = normalizer.denormalize(np.array(next_norm))
+            states.append(next_flat)
+            current_norm = next_norm
+        return np.array(states)
 
     if macro_only:
         if initial_flat.ndim == 1 and initial_flat.shape[0] > 4:
