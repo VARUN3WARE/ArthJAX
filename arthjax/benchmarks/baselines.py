@@ -16,6 +16,17 @@ class BaselineResult:
     elapsed_sec: float
 
 
+@dataclass
+class ComparisonRow:
+    """One row in the WM vs baseline comparison table."""
+
+    method: str
+    macro_mae: float
+    relative_error_pct: float
+    elapsed_sec: float
+    steps: int
+
+
 def ar1_forecast(series: np.ndarray, horizon: int) -> np.ndarray:
     """One-step AR(1) rolled forward (naive baseline)."""
     if len(series) < 3:
@@ -33,19 +44,119 @@ def ar1_forecast(series: np.ndarray, horizon: int) -> np.ndarray:
     return np.array(preds)
 
 
+def persistence_forecast(series: np.ndarray, horizon: int) -> np.ndarray:
+    """Hold last observed value."""
+    return np.full(horizon, series[-1])
+
+
+def _macro_mae(real: np.ndarray, pred: np.ndarray) -> float:
+    n = min(len(real), len(pred))
+    return float(np.mean(np.abs(real[:n] - pred[:n])))
+
+
+def _relative_pct(real: np.ndarray, mae: float) -> float:
+    mag = float(np.mean(np.abs(real)))
+    return (mae / (mag + 1e-8)) * 100
+
+
 def evaluate_ar1_baseline(
     real_macro: np.ndarray,
     horizon: int | None = None,
 ) -> BaselineResult:
-    """MAE of AR(1) one-step-ahead on macro columns (uses first column as proxy)."""
+    """MAE of AR(1) rolled forward averaged across macro columns."""
     horizon = horizon or min(200, len(real_macro) - 1)
-    series = real_macro[:, 0]
-    train = series[:-horizon]
-    actual = series[-horizon:]
     t0 = time.time()
-    pred = ar1_forecast(train, horizon)
-    mae = float(np.mean(np.abs(actual - pred)))
+    maes = []
+    for col in range(real_macro.shape[1]):
+        series = real_macro[:, col]
+        train = series[:-horizon]
+        actual = series[-horizon:]
+        pred = ar1_forecast(train, horizon)
+        maes.append(float(np.mean(np.abs(actual - pred))))
+    mae = float(np.mean(maes))
     return BaselineResult("AR(1)", mae, horizon, time.time() - t0)
+
+
+def evaluate_persistence_baseline(
+    real_macro: np.ndarray,
+    horizon: int | None = None,
+) -> BaselineResult:
+    """MAE of last-value persistence across macro columns."""
+    horizon = horizon or min(200, len(real_macro) - 1)
+    t0 = time.time()
+    maes = []
+    for col in range(real_macro.shape[1]):
+        series = real_macro[:, col]
+        train = series[:-horizon]
+        actual = series[-horizon:]
+        pred = persistence_forecast(train, horizon)
+        maes.append(float(np.mean(np.abs(actual - pred))))
+    mae = float(np.mean(maes))
+    return BaselineResult("Persistence", mae, horizon, time.time() - t0)
+
+
+def build_comparison_table(
+    real_macro: np.ndarray,
+    full_sim_sec: float,
+    sim_steps: int,
+    wm_mae: float,
+    wm_relative_pct: float,
+    wm_rollout_sec: float,
+    horizon: int | None = None,
+) -> list[ComparisonRow]:
+    """Build WM vs AR(1) vs persistence vs full-sim reference table."""
+    horizon = horizon or min(50, len(real_macro) - 1)
+    eval_slice = real_macro[-horizon:]
+
+    ar1 = evaluate_ar1_baseline(real_macro, horizon=horizon)
+    persist = evaluate_persistence_baseline(real_macro, horizon=horizon)
+
+    per_step_sim = full_sim_sec / max(sim_steps, 1)
+    sim_horizon_sec = per_step_sim * horizon
+
+    return [
+        ComparisonRow(
+            "Full simulation (reference)",
+            0.0,
+            0.0,
+            sim_horizon_sec,
+            horizon,
+        ),
+        ComparisonRow(
+            "Persistence (last value)",
+            persist.mae,
+            _relative_pct(eval_slice, persist.mae),
+            persist.elapsed_sec,
+            horizon,
+        ),
+        ComparisonRow(
+            "AR(1) rolled forward",
+            ar1.mae,
+            _relative_pct(eval_slice, ar1.mae),
+            ar1.elapsed_sec,
+            horizon,
+        ),
+        ComparisonRow(
+            "World model (macro)",
+            wm_mae,
+            wm_relative_pct,
+            wm_rollout_sec,
+            horizon,
+        ),
+    ]
+
+
+def format_comparison_table(rows: list[ComparisonRow]) -> str:
+    """Pretty-print comparison table for CLI output."""
+    header = f"{'Method':<28} {'Macro MAE':>10} {'Rel %':>8} {'Time (s)':>10} {'Steps':>6}"
+    sep = "-" * len(header)
+    lines = ["Forecast comparison:", header, sep]
+    for r in rows:
+        lines.append(
+            f"{r.method:<28} {r.macro_mae:>10.6f} {r.relative_error_pct:>7.2f}% "
+            f"{r.elapsed_sec:>10.4f} {r.steps:>6d}"
+        )
+    return "\n".join(lines)
 
 
 def compare_speed(full_sim_sec: float, wm_rollout_sec: float, steps: int) -> str:
