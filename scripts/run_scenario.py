@@ -13,6 +13,7 @@ import numpy as np
 
 from arthjax import EconomyConfig, __version__, init_state, simulate
 from arthjax.scenarios import SCENARIO_NAMES, apply_scenario_to_state, resolve_scenario
+from arthjax.scenarios.presets import _PRESETS
 from arthjax.simulation.step import make_step_jit
 
 
@@ -29,7 +30,15 @@ def main() -> int:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--output-dir", type=str, default=".")
     parser.add_argument("--plot", action="store_true")
+    parser.add_argument("--list", action= "store_true")
     args = parser.parse_args()
+
+    if args.list:
+        print("Available scenarios and descriptions:")
+        for scenario in SCENARIO_NAMES:
+            print(f"  {scenario}")
+            print(f"        {_PRESETS[scenario].description}\n")
+        return 0
 
     base = EconomyConfig(default_num_steps=args.steps, default_seed=args.seed)
     cfg, preset = resolve_scenario(args.scenario, base)
@@ -64,6 +73,10 @@ def main() -> int:
         print(f"Plots saved to {out}")
 
     return 0
+
+
+
+
 
 
 if __name__ == "__main__":
