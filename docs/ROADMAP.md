@@ -32,7 +32,9 @@ Track work via [GitHub Issues](https://github.com/VARUN3WARE/ArthJAX/issues).
 
 ---
 
-## Longer term (Phase 2+)
+## Longer term (Phase 2+ — maintainer track)
+
+Issues labeled **`maintainer`** are core roadmap work. Community **`good first issue`** items live on the [Project board](https://github.com/users/VARUN3WARE/projects).
 
 - Policy counterfactual search
 - Calibration hooks (coarse fit to macro series)

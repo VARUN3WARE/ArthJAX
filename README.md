@@ -6,6 +6,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![CI](https://github.com/VARUN3WARE/ArthJAX/actions/workflows/ci.yml/badge.svg)](https://github.com/VARUN3WARE/ArthJAX/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/VARUN3WARE/ArthJAX)](https://github.com/VARUN3WARE/ArthJAX/releases)
+[![Good first issues](https://img.shields.io/github/issues/VARUN3WARE/ArthJAX/good%20first%20issue?label=good%20first%20issues)](https://github.com/VARUN3WARE/ArthJAX/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 [![Open In Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/code/varunraosfanlkan/arthjax-gpu-macro-abm-world-model)
 
 ![Emergent macro dynamics from 250 agents](docs/assets/linkedin_hero.png)
@@ -90,13 +91,16 @@ pip install -e .
 - [Methods & limitations](docs/METHODS.md) — agent rules, world model, stylized facts
 - [Benchmark results](docs/BENCHMARKS.md) — pass/fail stylized facts table
 - [Full showcase & chart guide](docs/ARTHJAX_SHOWCASE.md) — problem, results, chart reference
-- [Contributing](CONTRIBUTING.md) — setup, PR guidelines, good first issues
+- [Contributing](CONTRIBUTING.md) — fork/PR flow, good first issues, review SLA
+- [Writing seed issues](docs/CONTRIBUTING_ISSUES.md) — maintainer guide (GOOD checklist)
 
 ---
 
 ## Contributing
 
-Contributions are welcome — tests, scenarios, docs, and benchmarks are especially helpful right now. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and commit expectations.
+Contributions welcome — **fork → branch → PR** (maintainer merges to `main`). See [CONTRIBUTING.md](CONTRIBUTING.md) and [good first issues](https://github.com/VARUN3WARE/ArthJAX/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
+
+Track community work on the [Project board](https://github.com/users/VARUN3WARE/projects) (Backlog → Good first → Done).
 
 If you're exploring the idea space: this is a **toy synthetic economy** for stress-testing and research prototypes, not a production forecasting tool. Issues and honest feedback are appreciated.
 
