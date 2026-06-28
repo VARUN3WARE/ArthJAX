@@ -286,7 +286,7 @@ Public repo and Kaggle demo are live. Roadmap:
 - Named stress scenarios (credit crunch, oil shock)
 - Stylized-facts benchmarks vs theory
 - World model v2 (lower macro rollout error)
-- See [README](https://github.com/VARUN3WARE/ArthJAX#roadmap)
+- See [README](docs/ROADMAP.md)
 
 ---
 
