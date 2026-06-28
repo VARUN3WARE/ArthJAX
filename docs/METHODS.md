@@ -48,6 +48,8 @@ The neural world model predicts **4 macro variables** per step:
 
 Training uses macro-only transitions collected from simulation rollouts with diverse initial seeds. A **multi-step autoregressive loss** (horizon = 3) improves rollout stability.
 
+**Full-state latent path (optional):** set `world_model_macro_only=False` and `world_model_use_latent=True` to train an encoder (684→32 on default config) plus latent MLP. Enabled via `EconomyConfig`; default remains macro-only.
+
 **Evaluation seed:** `EconomyConfig.world_model_eval_seed = 200`
 
 **Target:** macro rollout relative MAE **< 25%** on the standard eval seed (achieved ~14% on default config, CPU).
@@ -72,7 +74,9 @@ Six facts are computed from metrics history (see `arthjax/benchmarks/stylized_fa
 | Credit stress spike | At least one elevated episode |
 | Sentiment decline | No monotonic explosion |
 
-Run: `python scripts/run_benchmarks.py --steps 600`
+Run: `python scripts/run_benchmarks.py --steps 600 --plot`
+
+**Forecast comparison:** the CLI prints a table comparing full simulation (reference), persistence, AR(1), and world model macro MAE and runtime.
 
 ---
 

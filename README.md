@@ -58,7 +58,7 @@ source .venv/bin/activate
 pip install -e .
 python scripts/run_simulation.py --steps 600
 python scripts/run_scenario.py --scenario credit_crunch --steps 600 --plot
-python scripts/run_benchmarks.py --steps 600
+python scripts/run_benchmarks.py --steps 600 --plot
 python scripts/train_world_model.py --epochs 80 --plot
 ```
 

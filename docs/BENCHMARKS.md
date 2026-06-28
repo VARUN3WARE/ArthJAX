@@ -57,7 +57,20 @@ Credit crunch shows higher initial credit stress and bad-loan ratio vs baseline 
 
 ---
 
-## Reproduce
+## Forecast comparison (v1.1)
+
+| Method | Macro MAE | Rel % | Notes |
+|--------|-----------|-------|-------|
+| Full simulation | 0.0 | 0% | Reference (ground truth) |
+| Persistence | ~0.012 | ~7% | Last-value baseline |
+| AR(1) | ~0.012 | ~7% | Rolled forward per macro col |
+| World model | ~0.023 | ~15% | Macro-only rollout |
+
+Run: `python scripts/run_benchmarks.py --steps 600 --plot`
+
+Plots: `phillips_scatter.png`, `vol_clustering.png`
+
+---
 
 ```bash
 pip install -e ".[dev]"

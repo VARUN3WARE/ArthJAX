@@ -1,6 +1,6 @@
 # ArthJAX public roadmap
 
-Current release: **v1.0.0** — research-ready: scenarios, benchmarks, macro world model v2, CI.
+Current release: **v1.1.0** — Phase 1 backlog: benchmark plots, baseline table, latent encoder.
 
 Track work via [GitHub Issues](https://github.com/VARUN3WARE/ArthJAX/issues).
 
@@ -19,23 +19,24 @@ Track work via [GitHub Issues](https://github.com/VARUN3WARE/ArthJAX/issues).
 | v0.7 | Stylized-facts benchmarks + `docs/METHODS.md` |
 | v0.8 | World model v2 (macro-only, multi-step loss) |
 | v1.0 | Documented benchmarks, expanded CI, stable API |
+| v1.1 | Phillips/vol plots, forecast comparison table, latent encoder |
 
 ---
 
-## v1.0 criteria (met)
+## Phase 1 (v1.1 — complete)
 
-- Kaggle notebook runs end-to-end on a fresh fork
-- 6+ stylized facts documented with pass/fail ranges ([BENCHMARKS.md](BENCHMARKS.md))
-- No NaN on default 600-step simulation (CPU)
-- World model macro rollout error below 25% on standard eval seed (~15%)
-- `CONTRIBUTING.md` + [METHODS.md](METHODS.md) complete
+- [x] Volatility clustering test polish + benchmark tests
+- [x] Phillips curve scatter plot (`run_benchmarks.py --plot`)
+- [x] WM vs AR(1) vs full sim comparison table
+- [x] Full-state latent encoder (684→32, optional via config)
 
 ---
 
-## Longer term (post v1.0)
+## Longer term (Phase 2+)
 
 - Policy counterfactual search
 - Calibration hooks (coarse fit to macro series)
+- Uncertainty bands (ensemble / dropout)
 - Larger agent counts via JAX sharding
 - PyPI publish (`pip install arthjax`)
 
