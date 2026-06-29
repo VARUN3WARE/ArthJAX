@@ -108,6 +108,5 @@ python scripts/run_scenario.py --scenario credit_crunch --steps 600 --plot
 
 ## References
 
-- [Public roadmap](ROADMAP.md)
 - [Benchmark results](BENCHMARKS.md)
 - [Contributing](../CONTRIBUTING.md)

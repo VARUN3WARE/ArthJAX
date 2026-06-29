@@ -87,10 +87,8 @@ pip install -e .
 ## Documentation
 
 - [Medium — I Simulated 250 Agents on a GPU…](https://medium.com/@varunrao.aiml/i-simulated-250-agents-on-a-gpu-and-watched-a-financial-crisis-emerge-without-writing-crash-now-3811a6ca5f92) — essay on the build and why it exists
-- [Public roadmap](docs/ROADMAP.md) — v0.6→v1.0 release plan
 - [Methods & limitations](docs/METHODS.md) — agent rules, world model, stylized facts
 - [Benchmark results](docs/BENCHMARKS.md) — pass/fail stylized facts table
-- [Full showcase & chart guide](docs/ARTHJAX_SHOWCASE.md) — problem, results, chart reference
 - [Contributing](CONTRIBUTING.md) — fork/PR flow, good first issues, review SLA
 - [Writing seed issues](docs/CONTRIBUTING_ISSUES.md) — maintainer guide (GOOD checklist)
 
@@ -112,7 +110,7 @@ If you're exploring the idea space: this is a **toy synthetic economy** for stre
 arthjax/          # Python package (simulation logic in v0.2+)
 scripts/          # CLI entry points
 notebooks/        # Demo & Kaggle notebooks
-docs/             # Showcase and assets
+docs/             # Methods, benchmarks, assets
 tests/            # Test suite (v0.4)
 ```
 

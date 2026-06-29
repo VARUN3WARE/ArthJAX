@@ -61,7 +61,7 @@ Pick from the [Project board](https://github.com/users/VARUN3WARE/projects) or f
 
 - [`good first issue`](https://github.com/VARUN3WARE/ArthJAX/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) — scoped for newcomers
 - [`help wanted`](https://github.com/VARUN3WARE/ArthJAX/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) — slightly harder, unowned
-- [Public roadmap](docs/ROADMAP.md) — high-level direction
+- [GitHub Issues](https://github.com/VARUN3WARE/ArthJAX/issues) — roadmap and community backlog
 
 Issues labeled **`maintainer`** are Phase 2 core work — ask before starting.
 

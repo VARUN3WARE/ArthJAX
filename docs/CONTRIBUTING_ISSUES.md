@@ -51,7 +51,7 @@ Every seed issue should have:
 | Weekly (~15 min) | Triage labels, move cards, reply to questions |
 | Biweekly | Open 1–2 new `good first issue` items |
 | On merge | Close linked issue, thank contributor |
-| On release | Update `docs/ROADMAP.md`, log in `.local_dev/PROGRESS.md` |
+| On release | Update `docs/BENCHMARKS.md`, log in `.local_dev/PROGRESS.md` |
 
 ---
 

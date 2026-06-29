@@ -39,7 +39,7 @@ dev = [
 
 [project.urls]
 Homepage = "https://github.com/VARUN3WARE/ArthJAX"
-Documentation = "https://github.com/VARUN3WARE/ArthJAX/blob/main/docs/ARTHJAX_SHOWCASE.md"
+Documentation = "https://github.com/VARUN3WARE/ArthJAX/blob/main/docs/METHODS.md"
 Repository = "https://github.com/VARUN3WARE/ArthJAX"
 Issues = "https://github.com/VARUN3WARE/ArthJAX/issues"
 
