@@ -94,6 +94,9 @@ class EconomyConfig:
     unemployment_min: float = 0.025
     unemployment_max: float = 0.11
     inflation_target: float = 0.025
+    taylor_inflation_coef: float = 1.0
+    taylor_unemployment_coef: float = -0.35
+    taylor_rate_step: float = 0.012
     rate_min: float = 0.02
     rate_max: float = 0.09
 

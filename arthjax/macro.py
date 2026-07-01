@@ -42,8 +42,11 @@ def apply_macro_feedback(state: Dict, cfg: EconomyConfig) -> Dict:
 
     inflation_gap = new_inflation - cfg.inflation_target
     unemployment_gap = new_unemployment - nairu
-    policy_adjustment = inflation_gap * 1.0 + unemployment_gap * -0.35
-    new_rates = rates + policy_adjustment * 0.012
+    policy_adjustment = (
+        inflation_gap * cfg.taylor_inflation_coef
+        + unemployment_gap * cfg.taylor_unemployment_coef
+    )
+    new_rates = rates + policy_adjustment * cfg.taylor_rate_step
     new_rates = jnp.clip(new_rates, cfg.rate_min, cfg.rate_max)
 
     state["unemployment"] = new_unemployment
