@@ -350,6 +350,48 @@ def plot_real_vs_learned(
     plt.close()
 
 
+def plot_policy_counterfactual(
+    metrics_a: dict,
+    metrics_b: dict,
+    label_a: str,
+    label_b: str,
+    output_path: str,
+    burn: int = 25,
+) -> None:
+    """Overlay macro paths for two policies on the same seed."""
+    apply_plot_style()
+    fig, axes = plt.subplots(2, 2, figsize=(14, 9))
+    fig.patch.set_facecolor("#0f1117")
+    fig.suptitle(
+        "Policy counterfactual (same seed)",
+        fontsize=16,
+        fontweight="bold",
+        color="#f0f6fc",
+        y=0.98,
+    )
+
+    series = [
+        (axes[0, 0], "gdp", "GDP ($)", PALETTE["gdp"]),
+        (axes[0, 1], "inflation", "Inflation (%)", PALETTE["inflation"]),
+        (axes[1, 0], "unemployment", "Unemployment (%)", PALETTE["unemployment"]),
+        (axes[1, 1], "interest_rate", "Interest rate (%)", PALETTE["rates"]),
+    ]
+    for ax, key, ylab, color_a in series:
+        a = metrics_a[key][burn:]
+        b = metrics_b[key][burn:]
+        scale = 100.0 if key != "gdp" else 1.0
+        t = np.arange(burn, burn + len(a))
+        ax.plot(t, a * scale, color=color_a, linewidth=1.8, label=label_a)
+        ax.plot(t, b * scale, color=PALETTE["learned"], linewidth=1.8, linestyle="--", label=label_b)
+        style_ax(ax, ylab.replace(" (%)", "").replace(" ($)", ""), ylab, xlabel="Step")
+        ax.legend(facecolor="#161b22", edgecolor="#30363d", labelcolor="#f0f6fc", fontsize=8)
+
+    os.makedirs(os.path.dirname(os.path.abspath(output_path)) or ".", exist_ok=True)
+    fig.tight_layout(rect=[0, 0, 1, 0.96])
+    fig.savefig(output_path, dpi=150, facecolor=fig.get_facecolor())
+    plt.close()
+
+
 def save_all_plots(
     metrics_np: dict,
     output_dir: str,
