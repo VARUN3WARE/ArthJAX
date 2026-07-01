@@ -13,6 +13,7 @@ import numpy as np
 
 from arthjax import EconomyConfig, __version__, init_state
 from arthjax.simulation.step import make_step_jit
+from arthjax.viz.output import DEFAULT_PLOTS_DIR, resolve_output_dir
 from arthjax.world_model.rollout import (
     collect_real_macro_trajectory,
     collect_real_trajectory,
@@ -29,7 +30,7 @@ def main() -> int:
     parser.add_argument("--epochs", type=int, default=None)
     parser.add_argument("--rollouts", type=int, default=None)
     parser.add_argument("--rollout-length", type=int, default=None)
-    parser.add_argument("--output-dir", type=str, default=".")
+    parser.add_argument("--output-dir", type=str, default=DEFAULT_PLOTS_DIR)
     parser.add_argument("--plot", action="store_true")
     args = parser.parse_args()
 
@@ -88,8 +89,7 @@ def main() -> int:
     if args.plot:
         from arthjax.viz.plots import plot_real_vs_learned, plot_world_model_loss
 
-        out = os.path.abspath(args.output_dir)
-        os.makedirs(out, exist_ok=True)
+        out = resolve_output_dir(args.output_dir)
         plot_world_model_loss(losses, os.path.join(out, "world_model_loss_v2.png"))
         plot_real_vs_learned(
             real_traj, learned_traj, os.path.join(out, "real_vs_learned_v2.png")

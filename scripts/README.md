@@ -1,5 +1,7 @@
 # Scripts
 
+All scripts save charts to **`plots/`** by default when using `--plot`.
+
 | Script | Description |
 |--------|-------------|
 | `run_simulation.py` | Run macro ABM simulation (`--steps`, `--seed`, `--plot`) |

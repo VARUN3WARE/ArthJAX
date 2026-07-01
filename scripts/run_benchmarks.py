@@ -21,6 +21,7 @@ from arthjax.benchmarks import (
 from arthjax.benchmarks.baselines import compare_speed
 from arthjax.benchmarks.plots import plot_phillips_scatter, plot_volatility_clustering
 from arthjax.simulation.step import make_step_jit
+from arthjax.viz.output import DEFAULT_PLOTS_DIR, resolve_output_dir
 from arthjax.world_model.rollout import (
     collect_real_macro_trajectory,
     compare_macro_rollouts,
@@ -35,7 +36,7 @@ def main() -> int:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--quick", action="store_true", help="Tiny economy for CI smoke")
     parser.add_argument("--plot", action="store_true", help="Save Phillips + vol clustering charts")
-    parser.add_argument("--output-dir", type=str, default=".")
+    parser.add_argument("--output-dir", type=str, default=DEFAULT_PLOTS_DIR)
     args = parser.parse_args()
 
     if args.quick:
@@ -67,8 +68,7 @@ def main() -> int:
     print()
 
     if args.plot:
-        out = os.path.abspath(args.output_dir)
-        os.makedirs(out, exist_ok=True)
+        out = resolve_output_dir(args.output_dir)
         plot_phillips_scatter(
             metrics_np, os.path.join(out, "phillips_scatter.png"), burn=cfg.plot_burn_in
         )

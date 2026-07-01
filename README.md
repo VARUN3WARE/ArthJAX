@@ -57,7 +57,7 @@ cd ArthJAX
 python -m venv .venv
 source .venv/bin/activate
 pip install -e .
-python scripts/run_simulation.py --steps 600
+python scripts/run_simulation.py --steps 600 --plot
 python scripts/run_scenario.py --scenario credit_crunch --steps 600 --plot
 python scripts/run_benchmarks.py --steps 600 --plot
 python scripts/train_world_model.py --epochs 80 --plot
@@ -111,6 +111,7 @@ arthjax/          # Python package (simulation logic in v0.2+)
 scripts/          # CLI entry points
 notebooks/        # Demo & Kaggle notebooks
 docs/             # Methods, benchmarks, assets
+plots/            # Default CLI chart output (--plot)
 tests/            # Test suite (v0.4)
 ```
 

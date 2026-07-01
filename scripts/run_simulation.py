@@ -4,16 +4,15 @@
 from __future__ import annotations
 
 import argparse
-import os
 import time
 
 import jax
-import jax.numpy as jnp
 import numpy as np
 
 from arthjax import EconomyConfig, __version__, init_state
 from arthjax.simulation.loop import simulate
 from arthjax.simulation.step import make_step_jit
+from arthjax.viz.output import DEFAULT_PLOTS_DIR, resolve_output_dir
 
 
 def main() -> int:
@@ -23,7 +22,7 @@ def main() -> int:
     parser.add_argument(
         "--output-dir",
         type=str,
-        default=".",
+        default=DEFAULT_PLOTS_DIR,
         help="Directory for plot output",
     )
     parser.add_argument("--plot", action="store_true", help="Save macro charts")
@@ -60,8 +59,7 @@ def main() -> int:
     if args.plot:
         from arthjax.viz.plots import save_all_plots
 
-        out = os.path.abspath(args.output_dir)
-        os.makedirs(out, exist_ok=True)
+        out = resolve_output_dir(args.output_dir)
         save_all_plots(metrics_np, out, cfg)
         print(f"Plots saved to {out}")
 

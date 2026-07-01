@@ -48,6 +48,7 @@ notebook347af0b62d.ipynb
 handoff.md
 *.png
 !docs/assets/*.png
+!plots/*.png
 
 # OS
 .DS_Store
