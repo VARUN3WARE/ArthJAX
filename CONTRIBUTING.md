@@ -2,7 +2,7 @@
 
 Thanks for your interest — contributions are welcome whether you're fixing a bug, adding a scenario, improving docs, or extending the world model.
 
-ArthJAX is at **v1.1.0** — core sim, macro world model v2, scenarios, benchmarks, CI, and a [live Kaggle demo](https://www.kaggle.com/code/varunraosfanlkan/arthjax-gpu-macro-abm-world-model).
+ArthJAX is at **v1.2.0** — policy counterfactuals, Monte Carlo stress paths, scenarios, benchmarks, CI, and a [live Kaggle demo](https://www.kaggle.com/code/varunraosfanlkan/arthjax-gpu-macro-abm-world-model).
 
 **New here?** Start with issue [#Start here](https://github.com/VARUN3WARE/ArthJAX/issues?q=is%3Aissue+is%3Aopen+label%3Acommunity+in%3Atitle+%22Start+here%22) or browse [`good first issue`](https://github.com/VARUN3WARE/ArthJAX/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) tasks.
 

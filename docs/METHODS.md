@@ -96,6 +96,23 @@ python scripts/run_scenario.py --scenario credit_crunch --steps 600 --plot
 
 ---
 
+## Policy counterfactuals (v1.2)
+
+Taylor-rule knobs are exposed on `EconomyConfig`:
+
+- `inflation_target`, `taylor_inflation_coef`, `taylor_unemployment_coef`, `taylor_rate_step`
+
+Named presets in `arthjax/policy/presets.py`: `baseline`, `hawkish`, `dovish`.
+
+Same seed + same initial state → compare macro paths under two policies:
+
+```bash
+python scripts/run_counterfactual.py --policy-a baseline --policy-b hawkish --plot
+python scripts/run_monte_carlo.py --scenario credit_crunch --runs 20
+```
+
+---
+
 ## Limitations
 
 - **Not calibrated** to real GDP, CPI, or unemployment series
